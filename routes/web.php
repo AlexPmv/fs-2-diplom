@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin', function () {
-    return view('admin.index');
-})->name('admin');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [App\Http\Controllers\HallController::class, 'index'])->name('admin');
+});
+
+Auth::routes();
 
 Route::get('/{date?}', function ($date = null) {
     return view('client.index', ['date' => $date]);
 })->name('/');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/add_hall', [App\Http\Controllers\HallController::class, 'store'])->name('add_hall');
+Route::get('/delete_hall/{id}', [App\Http\Controllers\HallController::class, 'destroy'])->name('delete_hall');

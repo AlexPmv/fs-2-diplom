@@ -3,7 +3,6 @@
 namespace App\View\Components\Client;
 
 use Closure;
-use DateTime;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 \Moment\Moment::setLocale('ru_RU');

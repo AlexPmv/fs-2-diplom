@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('halls', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->integer('rowCount')->default(10);
             $table->integer('seatsCount')->default(8);
             $table->integer('priceStandart')->default(350);

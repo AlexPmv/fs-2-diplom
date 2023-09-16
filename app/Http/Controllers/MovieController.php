@@ -29,7 +29,21 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'bail|unique:halls',
+            ],
+            [
+                'name.unique' => 'Фильм с таким именем уже существует',
+            ]
+        );
+
+        $hall = new Movie;
+        $hall->name = $request->name;
+        $hall->image = $request->image;
+        $hall->duration = $request->duration;
+        $hall->save();
+        return redirect('admin');
     }
 
     /**

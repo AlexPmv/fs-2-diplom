@@ -14,6 +14,12 @@
   padding: 0;
   box-sizing: border-box; }
 
+a {
+  text-decoration: none;}  
+
+li {
+  list-style-type: none;}  
+
 html {
   font-family: "Roboto", sans-serif;
   font-size: 62.5%; }
@@ -40,6 +46,9 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
   padding: 35px 42px 35px 104px; }
 
 .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: #FFFFFF;
   text-transform: uppercase; }
   .page-header .page-header__title {
@@ -51,6 +60,21 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
   .page-header .page-header__subtitle {
     font-size: 1rem;
     letter-spacing: 0.46em; }
+  .login-logout{
+    display: flex;
+    gap: 25px; }
+    .username__link, .logout__link {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 500; }
+    .username__link{
+    text-transform: none; } 
+    .logout__link {
+      padding: 10px 25px;
+      background-color: crimson;
+      border-radius: 3px;
+      transition-duration: .5s;
+      transition-timing-function: ease; }  
 
 .conf-step {
   position: relative;
@@ -149,7 +173,7 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
 .conf-step:last-of-type::before {
   display: none; }
 
-.conf-step__paragraph {
+.conf-step__paragraph, .validation-messages__list {
   font-size: 1.6rem;
   font-weight: 400;
   color: #000000;
@@ -342,6 +366,14 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
     z-index: 10; }
   .conf-step__selectors-box .conf-step__radio:hover + .conf-step__selector {
     background-color: rgba(255, 255, 255, 0.9); }
+
+.hall-config {
+  display: none;
+}
+
+.hall-config.active {
+  display: block;
+}
 
 .conf-step__hall {
   position: relative;

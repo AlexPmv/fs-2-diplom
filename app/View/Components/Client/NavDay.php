@@ -21,7 +21,8 @@ class NavDay extends Component
     }
 
     protected function сlassFormation() {
-        if ($this->navDayData['date'] === date('Y-m-d')) {
+
+        if ($this->navDayData['date'] === (new \Moment\Moment('now', 'Europe/Moscow'))->format('Y-m-d')) {
             $this->navDayData['class'] .= ' page-nav__day_today';
         }
 

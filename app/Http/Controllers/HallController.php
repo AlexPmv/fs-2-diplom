@@ -16,6 +16,8 @@ class HallController extends Controller
      */
     public function index()
     {
+        // dd((new HallConfigController)->index());
+        // dd(Hall::all());
         $data = Hall::all();
         return view('admin.index', ['data' => $data]);
     }
@@ -44,8 +46,23 @@ class HallController extends Controller
 
         $hall = new Hall;
         $hall->name = $request->name;
-        $hall->save();
+        $result = $hall->save();
+
+        if ($result) {
+            $newStoredHall = Hall::where('name', $request->name)->first(['id', 'rowCount', 'seatsCount'])->toArray();
+
+            for ($i = 1; $i < $newStoredHall['rowCount'] + 1; $i++) {
+                for ($b = 1; $b < $newStoredHall['seatsCount'] + 1; $b++) {
+                    (new HallConfigController)->store(['hall_id' => $newStoredHall['id'], 'row' => $i, 'seat' => $b]);
+                };
+            };
+        }
+        
         return redirect('admin');
+    }
+
+    protected function createHallConfig(string $name) {
+
     }
 
     /**

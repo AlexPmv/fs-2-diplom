@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Showtime extends Model
+class HallConfig extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'movie_id',
         'hall_id',
-        'date',
-        'time',
+        'row',
+        'seat',
+        'status',
     ];
 }

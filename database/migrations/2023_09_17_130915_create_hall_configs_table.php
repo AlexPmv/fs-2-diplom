@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('halls', function (Blueprint $table) {
+        Schema::create('hall_configs', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->integer('rowCount')->default(0);
-            $table->integer('seatsCount')->default(0);
-            $table->integer('priceStandart')->default(350);
-            $table->integer('priceVip')->default(500);
-            $table->boolean('active')->default(false);
+            $table->integer('hall_id')->unsigned();
+            $table->foreign('hall_id')->references('id')->on('halls')->onDelete('cascade');
+            $table->integer('row');
+            $table->integer('seat');
+            $table->string('status')->default('standart');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('halls');
+        Schema::dropIfExists('hall_configs');
     }
 };

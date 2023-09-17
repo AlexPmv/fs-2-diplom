@@ -1,5 +1,7 @@
 function switchPopup(el) {
-  el.classList.toggle('active');
+  if(el) {
+    el.classList.toggle('active');
+  }
 }
 
 function switchHallPopup(el, name = null, id = null) {
@@ -8,7 +10,9 @@ function switchHallPopup(el, name = null, id = null) {
     el.getElementsByTagName('form')[0].action = 'delete_hall/' + id;
   }
 
-  switchPopup(el);
+  if(el) {
+    switchPopup(el);
+  }
 }
 
 function switchHallConfig(id) {

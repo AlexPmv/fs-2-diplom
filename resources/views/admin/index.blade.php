@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
   <meta charset="UTF-8">
@@ -17,6 +16,7 @@
 @includeIf('admin.movie_add_popup')
 @includeIf('admin.showtime_add_popup')
 @includeIf('admin.showtime_delete_popup')
+@includeIf('admin.info_popup')
 
 @if ($errors->any())
   @includeIf('admin.validation_alert_popup')
@@ -55,11 +55,11 @@
       <div class="conf-step__wrapper">
         <p class="conf-step__paragraph">Доступные залы:</p>
         <ul class="conf-step__list">
-            @for($i = 0; $i < count($data); $i++)
-                <li>{{$data[$i]->name}}
-                    <button class="conf-step__button conf-step__button-trash" onclick="switchHallPopup(document.getElementById('hall-delete-popup'), '{{$data[$i]->name}}', {{$data[$i]->id}})"></button>
-                </li>
-            @endfor
+          @for($i = 0; $i < count($data); $i++)
+            <li>{{$data[$i]->name}}
+                <button class="conf-step__button conf-step__button-trash" onclick="switchHallPopup(document.getElementById('hall-delete-popup'), '{{$data[$i]->name}}', {{$data[$i]->id}})"></button>
+            </li>
+          @endfor
         </ul>
         <button class="conf-step__button conf-step__button-accent" onclick="switchHallPopup(document.getElementById('hall-add-popup'))">Создать зал</button>
       </div>
@@ -73,111 +73,43 @@
         <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
         <ul class="conf-step__selectors-box">
           @for($i = 0; $i < count($data); $i++)
-            <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{$data[$i]->name}}" {{$i === 0 ? 'checked' : null}} onclick="switchHallConfig({{$data[$i]->id}})"><span class="conf-step__selector">{{$data[$i]->name}}</span></li>
+            <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{$data[$i]->name}}" {{$i === 0 ? 'checked' : null}} onclick="switchHallTabs({{$data[$i]->id}}, 'hall-config')"><span class="conf-step__selector">{{$data[$i]->name}}</span></li>
           @endfor
         </ul>
         
         @for($i = 0; $i < count($data); $i++)
         <div class="hall-config {{$i === 0 ? 'active' : null}}" id="hall-config-{{$data[$i]->id}}">
-          @if($data[$i]->rowCount === 0 || $data[$i]->seatsCount === 0)
-            <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
-            <div class="conf-step__legend">
-              <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input" value="{{$data[$i]->rowCount}}"></label>
+          <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
+          <div class="conf-step__legend">
+            <form action="update_seat_count" method="post">
+              @csrf
+              <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input" name="rows" value="{{$data[$i]->rowCount}}" required></label>
               <span class="multiplier">x</span>
-              <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input" value="{{$data[$i]->seatsCount}}" oninput="console.log(this.value)"></label>
-            </div>
-          @else
-            <p class="conf-step__paragraph">Теперь вы можете указать типы кресел на схеме зала:</p>
-            <div class="conf-step__legend">
-              <span class="conf-step__chair conf-step__chair_standart"></span> — обычные кресла
-              <span class="conf-step__chair conf-step__chair_vip"></span> — VIP кресла
-              <span class="conf-step__chair conf-step__chair_disabled"></span> — заблокированные (нет кресла)
-              <p class="conf-step__hint">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
-            </div>  
-            <div class="conf-step__hall">
-              <div class="conf-step__hall-wrapper">
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_disabled"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                  <span class="conf-step__chair conf-step__chair_disabled"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                  <span class="conf-step__chair conf-step__chair_disabled"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_disabled"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_disabled"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_disabled"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_vip"></span>
-                  <span class="conf-step__chair conf-step__chair_vip"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_vip"></span><span class="conf-step__chair conf-step__chair_vip"></span>
-                  <span class="conf-step__chair conf-step__chair_vip"></span><span class="conf-step__chair conf-step__chair_vip"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_vip"></span><span class="conf-step__chair conf-step__chair_vip"></span>
-                  <span class="conf-step__chair conf-step__chair_vip"></span><span class="conf-step__chair conf-step__chair_vip"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_vip"></span><span class="conf-step__chair conf-step__chair_vip"></span>
-                  <span class="conf-step__chair conf-step__chair_vip"></span><span class="conf-step__chair conf-step__chair_vip"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_disabled"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                </div>  
-    
-                <div class="conf-step__row">
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>
-                  <span class="conf-step__chair conf-step__chair_standart"></span><span class="conf-step__chair conf-step__chair_standart"></span>          
-                </div>
-              </div>  
-            </div>
-          @endif
-          
+              <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input" name="seats" value="{{$data[$i]->seatsCount}}" required></label>
+              <input type="text" class="conf-step__input" name="id" value="{{$data[$i]->id}}" style="display: none">
+              <input type="submit" value="{{($data[$i]->rowCount === 0 || $data[$i]->seatsCount === 0) ? 'Построить зал' : 'Перестроить зал'}}" class="conf-step__button conf-step__button-accent" style="margin-left: 20px">
+            </form>
+          </div>
+          @if($data[$i]->rowCount > 0 && $data[$i]->seatsCount > 0)
+          <p class="conf-step__paragraph">Теперь вы можете указать типы кресел на схеме зала:</p>
+          <div class="conf-step__legend">
+            <span class="conf-step__chair conf-step__chair_standart"></span> — обычные кресла
+            <span class="conf-step__chair conf-step__chair_vip"></span> — VIP кресла
+            <span class="conf-step__chair conf-step__chair_disabled"></span> — заблокированные (нет кресла)
+            <p class="conf-step__hint">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
+          </div>  
+
+          <div class="conf-step__hall">
+            <x-admin.step-hall :hallData="['id' => $data[$i]->id, 'rows' => $data[$i]->rowCount, 'seats' => $data[$i]->seatsCount]"/>
+          </div>
           <fieldset class="conf-step__buttons text-center">
-            <button class="conf-step__button conf-step__button-regular">Отмена</button>
-            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
+            <a class="conf-step__button conf-step__button-regular" href="{{route('admin')}}">Отмена</a>
+            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent" onclick="updateHallConfig(this)" data-csrf-token={{csrf_token()}}>
           </fieldset>  
+          @endif
         </div>
         @endfor
-        
-        
-      </div>
+      </div>  
     </section>
     
     <section class="conf-step">
@@ -187,24 +119,29 @@
       <div class="conf-step__wrapper">
         <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
         <ul class="conf-step__selectors-box">
-          <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 1"><span class="conf-step__selector">Зал 1</span></li>
-          <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 2" checked><span class="conf-step__selector">Зал 2</span></li>
+          @for($i = 0; $i < count($data); $i++)
+            <li><input type="radio" class="conf-step__radio" name="prices-hall" value="{{$data[$i]->name}}" {{$i === 0 ? 'checked' : null}} onclick="switchHallTabs({{$data[$i]->id}}, 'hall-price')"><span class="conf-step__selector">{{$data[$i]->name}}</span></li>
+          @endfor
         </ul>
           
-        <p class="conf-step__paragraph">Установите цены для типов кресел:</p>
-          <div class="conf-step__legend">
-            <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" ></label>
-            за <span class="conf-step__chair conf-step__chair_standart"></span> обычные кресла
-          </div>  
-          <div class="conf-step__legend">
-            <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" value="350"></label>
-            за <span class="conf-step__chair conf-step__chair_vip"></span> VIP кресла
-          </div>  
-        
-        <fieldset class="conf-step__buttons text-center">
-          <button class="conf-step__button conf-step__button-regular">Отмена</button>
-          <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
-        </fieldset>  
+        @for($i = 0; $i < count($data); $i++)
+        <div class="hall-price {{$i === 0 ? 'active' : null}}" id="hall-price-{{$data[$i]->id}}">
+          <p class="conf-step__paragraph">Установите цены для типов кресел:</p>
+            <div class="conf-step__legend">
+              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" value="{{$data[$i]->priceStandart}}"></label>
+              за <span class="conf-step__chair conf-step__chair_standart"></span> обычные кресла
+            </div>  
+            <div class="conf-step__legend">
+              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" value="{{$data[$i]->priceVip}}"></label>
+              за <span class="conf-step__chair conf-step__chair_vip"></span> VIP кресла
+            </div>  
+          
+          <fieldset class="conf-step__buttons text-center">
+            <a class="conf-step__button conf-step__button-regular" href="{{route('admin')}}">Отмена</a>
+            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
+          </fieldset>
+        </div>
+        @endfor
       </div>
     </section>
     
@@ -298,8 +235,6 @@
       </div>
     </section>    
   </main>
-
- 
 
   <script src="{{asset('/assets/admin/js/accordeon.js')}}"></script>
   <script src="{{asset('/assets/admin/js/index.js')}}"></script>

@@ -27,12 +27,12 @@ class HallConfigController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(array $newStoredHall)
+    public function store(array $hallData)
     {
         $hallConfig = new HallConfig();
-        $hallConfig->hall_id = $newStoredHall['hall_id'];
-        $hallConfig->row = $newStoredHall['row'];
-        $hallConfig->seat = $newStoredHall['seat'];
+        $hallConfig->hall_id = $hallData['id'];
+        $hallConfig->row = $hallData['rows'];
+        $hallConfig->seat = $hallData['seats'];
         $hallConfig->save();
     }
 
@@ -55,9 +55,23 @@ class HallConfigController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, HallConfig $hallConfig)
+    public function update(Request $request)
     {
-        //
+        $result = null;
+        $requestData = $request->toArray();
+        foreach ($requestData as $seatData) {
+            $findedSeat = HallConfig::find($seatData['id']);
+            $findedSeat->status = $seatData['status'];
+            $findedSeat->save();
+            $result = $findedSeat;
+        }
+
+        if ($result) {
+            return response(json_encode('Виды кресел в зале сохранены!'), 200)
+            ->header('Content-Type', 'text/plain');
+        }
+
+
     }
 
     /**

@@ -10,6 +10,7 @@
       </div>
       <div class="popup__wrapper">
         <form action="add_movie" method="post" accept-charset="utf-8">
+          @csrf
           <label class="conf-step__label conf-step__label-fullsize" for="name">
             Название фильма
             <input class="conf-step__input" type="text" placeholder="Например, &laquo;Гражданин Кейн&raquo;" name="name" required>

@@ -25,4 +25,6 @@ Route::get('/{date?}', function ($date = null) {
 
 
 Route::post('/add_hall', [App\Http\Controllers\HallController::class, 'store'])->name('add_hall');
+Route::post('/update_seat_count', [App\Http\Controllers\HallController::class, 'update'])->name('update_seat_count');
+Route::post('/update_hall_config', [App\Http\Controllers\HallConfigController::class, 'update'])->name('update_hall_config');
 Route::get('/delete_hall/{id}', [App\Http\Controllers\HallController::class, 'destroy'])->name('delete_hall');

@@ -36,7 +36,7 @@ function seatClickStatusChange(el) {
 
 async function updateHallConfig(el) {
   requestData = [];
-  csrfToken = el.dataset.csrfToken
+  token = el.dataset.token
   seatsCollection = el.closest('.hall-config').querySelectorAll('[data-seat-id]')
 
   for (seat of seatsCollection) {
@@ -47,7 +47,7 @@ async function updateHallConfig(el) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'X-CSRF-TOKEN': csrfToken
+      'X-CSRF-TOKEN': token
     },
     body: JSON.stringify(requestData)
   })
@@ -55,9 +55,82 @@ async function updateHallConfig(el) {
   result = await response.json();
  
   if (result) {
+    showResponseMessage(result);
+    return;
+  }
+}
+
+async function updateHallPrice(el) {
+  token = el.dataset.token
+  halId = el.dataset.hallId
+  priceCollection = el.closest('.hall-price').querySelectorAll('.conf-step__input')
+
+  let response = await fetch('update_hall_price', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'X-CSRF-TOKEN': token
+    },
+    body: JSON.stringify({id: halId, priceStandart: priceCollection[0].value, priceVip: priceCollection[1].value})
+  })
+
+  result = await response.json();
+ 
+  if (result.errors) {
+    showResponseMessage(result.errors, 'error');
+    return
+  }
+
+  if (result) {
+    showResponseMessage(result);
+    return;
+  }
+}
+
+function showResponseMessage (result, status = 'success') {
+  if (status === 'error') {
     infoPopup = document.getElementById('info-popup');
+    infoPopup.querySelector('h2').textContent = 'Ошибка!';
+    messages = infoPopup.querySelector('.messages__wrapper');
     if (infoPopup) {
-      infoPopup.getElementsByClassName('message-info')[0].textContent = result;
+      messages.textContent = '';
+      child = messages.lastElementChild; 
+    
+      if (child) {
+        while (child) {
+          messages.removeChild(child);
+          child = messages.lastElementChild;
+        }
+      }
+
+      result.forEach(error => {
+        p = document.createElement("p");
+        p.className = 'message';
+        p.style = 'padding: 2px';
+        p.textContent = error
+        messages.appendChild(p);
+      });
+    } 
+
+    switchPopup(infoPopup);
+    return
+  }
+
+  if (status === 'success') {
+    infoPopup = document.getElementById('info-popup');
+    infoPopup.querySelector('h2').textContent = 'Сообщение!';
+    messages = infoPopup.querySelector('.messages__wrapper')
+    if (infoPopup) {
+      child = messages.lastElementChild; 
+      
+      if (child) {
+        while (child) {
+          messages.removeChild(child);
+          child = messages.lastElementChild;
+        }
+      }
+     
+      messages.textContent = result;
       switchPopup(infoPopup);
     }
   }

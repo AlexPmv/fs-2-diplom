@@ -4,7 +4,7 @@
       <div class="popup__header">
         <h2 class="popup__title">
           Добавление зала
-          <a class="popup__dismiss" href="#"><img src="{{url('/assets/admin/i/close.png')}}" alt="Закрыть" onclick="switchHallPopup(document.getElementById('hall-add-popup'))"></a>
+          <a class="popup__dismiss"><img src="{{url('/assets/admin/i/close.png')}}" alt="Закрыть" onclick="switchHallPopup(document.getElementById('hall-add-popup'))"></a>
         </h2>
 
       </div>

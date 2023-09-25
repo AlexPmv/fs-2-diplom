@@ -67,11 +67,9 @@ class HallConfigController extends Controller
         }
 
         if ($result) {
-            return response(json_encode('Виды кресел в зале сохранены!'), 200)
+            return response(json_encode('Настройки кресел успешно сохранены!'), 200)
             ->header('Content-Type', 'text/plain');
         }
-
-
     }
 
     /**

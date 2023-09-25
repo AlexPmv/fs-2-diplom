@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [App\Http\Controllers\HallController::class, 'index'])->name('admin');
+    Route::post('/add_hall', [App\Http\Controllers\HallController::class, 'store'])->name('add_hall');
+    Route::post('/update_seat_count', [App\Http\Controllers\HallController::class, 'updateSeatCount'])->name('update_seat_count');
+    Route::post('/update_hall_price', [App\Http\Controllers\HallController::class, 'updatePrice'])->name('update_hall_price');
+    Route::post('/update_hall_config', [App\Http\Controllers\HallConfigController::class, 'update'])->name('update_hall_config');
+    Route::get('/delete_hall/{id}', [App\Http\Controllers\HallController::class, 'destroy'])->name('delete_hall');
 });
 
 Auth::routes();
@@ -22,9 +27,3 @@ Auth::routes();
 Route::get('/{date?}', function ($date = null) {
     return view('client.index', ['date' => $date]);
 })->name('/');
-
-
-Route::post('/add_hall', [App\Http\Controllers\HallController::class, 'store'])->name('add_hall');
-Route::post('/update_seat_count', [App\Http\Controllers\HallController::class, 'update'])->name('update_seat_count');
-Route::post('/update_hall_config', [App\Http\Controllers\HallConfigController::class, 'update'])->name('update_hall_config');
-Route::get('/delete_hall/{id}', [App\Http\Controllers\HallController::class, 'destroy'])->name('delete_hall');

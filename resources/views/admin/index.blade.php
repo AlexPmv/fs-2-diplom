@@ -57,11 +57,11 @@
         <ul class="conf-step__list">
           @for($i = 0; $i < count($data); $i++)
             <li>{{$data[$i]->name}}
-                <button class="conf-step__button conf-step__button-trash" onclick="switchHallPopup(document.getElementById('hall-delete-popup'), '{{$data[$i]->name}}', {{$data[$i]->id}})"></button>
+                <button class="conf-step__button conf-step__button-trash" onclick="switchPopup(document.getElementById('hall-delete-popup'), '{{$data[$i]->name}}', {{$data[$i]->id}})"></button>
             </li>
           @endfor
         </ul>
-        <button class="conf-step__button conf-step__button-accent" onclick="switchHallPopup(document.getElementById('hall-add-popup'))">Создать зал</button>
+        <button class="conf-step__button conf-step__button-accent" onclick="switchPopup(document.getElementById('hall-add-popup'))">Создать зал</button>
       </div>
     </section>
     
@@ -83,11 +83,11 @@
           <div class="conf-step__legend">
             <form action="update_seat_count" method="post">
               @csrf
-              <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input" name="rows" value="{{$data[$i]->rowCount}}" required></label>
+              <label class="conf-step__label">Рядов, шт<input type="number" class="conf-step__input" name="rows" value="{{$data[$i]->rowCount}}" required></label>
               <span class="multiplier">x</span>
-              <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input" name="seats" value="{{$data[$i]->seatsCount}}" required></label>
+              <label class="conf-step__label">Мест, шт<input type="number" class="conf-step__input" name="seats" value="{{$data[$i]->seatsCount}}" required></label>
               <input type="text" class="conf-step__input" name="id" value="{{$data[$i]->id}}" style="display: none">
-              <input type="submit" value="{{($data[$i]->rowCount === 0 || $data[$i]->seatsCount === 0) ? 'Построить зал' : 'Перестроить зал'}}" class="conf-step__button conf-step__button-accent" style="margin-left: 20px">
+              <input type="submit" value="{{($data[$i]->rowCount === 0 || $data[$i]->seatsCount === 0) ? 'Построить зал' : 'Сбросить и перестроить зал'}}" class="conf-step__button conf-step__button-accent" style="margin-left: 20px">
             </form>
           </div>
           @if($data[$i]->rowCount > 0 && $data[$i]->seatsCount > 0)
@@ -104,7 +104,7 @@
           </div>
           <fieldset class="conf-step__buttons text-center">
             <a class="conf-step__button conf-step__button-regular" href="{{route('admin')}}">Отмена</a>
-            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent" onclick="updateHallConfig(this)" data-csrf-token={{csrf_token()}}>
+            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent" onclick="updateHallConfig(this)" data-token={{csrf_token()}}>
           </fieldset>  
           @endif
         </div>
@@ -128,17 +128,17 @@
         <div class="hall-price {{$i === 0 ? 'active' : null}}" id="hall-price-{{$data[$i]->id}}">
           <p class="conf-step__paragraph">Установите цены для типов кресел:</p>
             <div class="conf-step__legend">
-              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" value="{{$data[$i]->priceStandart}}"></label>
+              <label class="conf-step__label">Цена, рублей<input type="number" class="conf-step__input" placeholder="0" value="{{$data[$i]->priceStandart}}"></label>
               за <span class="conf-step__chair conf-step__chair_standart"></span> обычные кресла
             </div>  
             <div class="conf-step__legend">
-              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" value="{{$data[$i]->priceVip}}"></label>
+              <label class="conf-step__label">Цена, рублей<input type="number" class="conf-step__input" placeholder="0" value="{{$data[$i]->priceVip}}"></label>
               за <span class="conf-step__chair conf-step__chair_vip"></span> VIP кресла
             </div>  
           
           <fieldset class="conf-step__buttons text-center">
             <a class="conf-step__button conf-step__button-regular" href="{{route('admin')}}">Отмена</a>
-            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
+            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent" onclick="updateHallPrice(this)" data-token={{csrf_token()}} data-hall-id="{{$data[$i]->id}}">
           </fieldset>
         </div>
         @endfor
@@ -151,7 +151,7 @@
       </header>
       <div class="conf-step__wrapper">
         <p class="conf-step__paragraph">
-          <button class="conf-step__button conf-step__button-accent">Добавить фильм</button>
+          <button class="conf-step__button conf-step__button-accent" onclick="switchPopup(document.getElementById('movie-add-popup'))">Добавить фильм</button>
         </p>
         <div class="conf-step__movies">
           <div class="conf-step__movie">

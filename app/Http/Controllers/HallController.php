@@ -9,6 +9,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Validation\Validator;
 
 class HallController extends Controller
 {
@@ -69,7 +71,7 @@ class HallController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function updateSeatCount(Request $request)
     {
         $request->validate(
             [
@@ -107,6 +109,33 @@ class HallController extends Controller
         }
 
         return redirect('admin');
+    }
+    public function updatePrice(Request $request)
+    {
+        $validator = FacadesValidator::make($request->all(), [
+            'priceStandart' => 'numeric|min:100',
+            'priceVip' => 'numeric|min:100',
+        ], [
+            'priceStandart' => 'Минимальная значение поля цена 1: 100',
+            'priceVip' => 'Минимальная значение поля цена 2: 100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        };
+
+        $hall = Hall::find($request->id);
+
+        if ($hall) {
+            $hall->priceStandart = $request->priceStandart;
+            $hall->priceVip = $request->priceVip;
+            $result = $hall->save();
+
+            if ($result) {
+                return response(json_encode('Цены успешно сохранены!'), 200)
+                ->header('Content-Type', 'text/plain');
+            }
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MovieController extends Controller
 {
@@ -31,19 +32,31 @@ class MovieController extends Controller
     {
         $request->validate(
             [
-                'name' => 'bail|unique:halls',
+                'name' => 'required|unique:halls',
+                'duration' => 'required|numeric',
+                'image' => 'required|mimes:jpeg,gif,bmp,png|max:1024',
             ],
             [
+                'name.required' => 'Название фильма не заполнено',
                 'name.unique' => 'Фильм с таким именем уже существует',
+                'duration.numeric' => 'В поле "продолжитель фильма" используются только цифры',
+                'duration.required' => 'Продолжительность фильма не заполнено',
+                'image.required' => 'Не выбран файл картинки',
+                'image.mimes' => 'Требуемые форматы картинки: jpeg, gif, bmp, png',
+                'image.max' => 'Максимальный размер картинки 1024 пикселя',
             ]
         );
 
-        $hall = new Movie;
-        $hall->name = $request->name;
-        $hall->image = $request->image;
-        $hall->duration = $request->duration;
-        $hall->save();
-        return redirect('admin');
+        $image = $request->file('image');
+        $filename = $image->getClientOriginalName();
+        $image->move(public_path('posters'), $filename);
+
+        $movie = new Movie;
+        $movie->name = $request->name;
+        $movie->duration = $request->duration;
+        $movie->image = '/posters/' . $filename;
+        $movie->save();
+        return redirect('admin')->withFragment('#showtime-section');
     }
 
     /**
@@ -73,8 +86,10 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Movie $movie)
+    public function destroy(Request $request)
     {
-        //
+        $movie = Movie::find($request['id']);
+        $movie->delete();
+        return redirect('admin')->withFragment('#showtime-section');
     }
 }

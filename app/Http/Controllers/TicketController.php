@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Showtime;
-use App\Models\Movie;
+use App\Models\Ticket;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ShowtimeController extends Controller
+class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,19 +29,13 @@ class ShowtimeController extends Controller
      */
     public function store(Request $request)
     {
-        $showtime = new Showtime();
-        $showtime->hall_id = $request['hall_id'];
-        $showtime->movie_id = $request['movie_id'];
-        $showtime->start_time = $request['start_time'];
-        $showtime->movie_name = Movie::find($request['movie_id'])->name;
-        $showtime->save();
-        return redirect('admin')->withFragment('#showtime-section');
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Showtime $showtime)
+    public function show(Ticket $ticket)
     {
         //
     }
@@ -50,7 +43,7 @@ class ShowtimeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Showtime $showtime)
+    public function edit(Ticket $ticket)
     {
         //
     }
@@ -58,7 +51,7 @@ class ShowtimeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Showtime $showtime)
+    public function update(Request $request, Ticket $ticket)
     {
         //
     }
@@ -66,11 +59,8 @@ class ShowtimeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Ticket $ticket)
     {
-        $showtime = Showtime::find($request['id']);
-        $showtime->delete();
-        return redirect('admin')->withFragment('#showtime-section');
-
+        //
     }
 }

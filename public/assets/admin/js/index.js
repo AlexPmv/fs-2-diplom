@@ -4,10 +4,10 @@ function switchPopup(el) {
   }
 }
 
-function switchHallPopup(el, name = null, id = null) {
+function switchDeletePopup(el, name = null, id = null) {
   if (name && id) {
-    el.getElementsByTagName('span')[0].textContent = name;
-    el.getElementsByTagName('form')[0].action = 'delete_hall/' + id;
+    el.querySelector('span').textContent = name;
+    el.querySelector('[name="id"]').value = id;
   }
 
   if(el) {
@@ -135,3 +135,4 @@ function showResponseMessage (result, status = 'success') {
     }
   }
 }
+

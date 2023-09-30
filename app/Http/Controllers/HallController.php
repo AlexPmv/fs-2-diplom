@@ -38,9 +38,10 @@ class HallController extends Controller
     {
         $request->validate(
             [
-                'name' => 'bail|unique:halls',
+                'name' => 'required|unique:halls',
             ],
             [
+                'name.required' => 'Поле имя, пустое',
                 'name.unique' => 'Такое имя зала уже используется, введите другое',
             ]
         );
@@ -75,8 +76,8 @@ class HallController extends Controller
     {
         $request->validate(
             [
-                'rows' => 'numeric|min:1|max:10',
-                'seats' => 'numeric|min:1|max:10',
+                'rows' => 'required|numeric|min:1|max:10',
+                'seats' => 'required|numeric|min:1|max:10',
             ],
             [
                 'rows' => 'Количество рядов должно быть от 1 до 10',
@@ -108,13 +109,13 @@ class HallController extends Controller
             }
         }
 
-        return redirect('admin');
+        return redirect('admin')->withFragment('#hall-config-section');
     }
     public function updatePrice(Request $request)
     {
         $validator = FacadesValidator::make($request->all(), [
-            'priceStandart' => 'numeric|min:100',
-            'priceVip' => 'numeric|min:100',
+            'priceStandart' => 'required|numeric|min:100',
+            'priceVip' => 'required|numeric|min:100',
         ], [
             'priceStandart' => 'Минимальная значение поля цена 1: 100',
             'priceVip' => 'Минимальная значение поля цена 2: 100',
@@ -141,9 +142,9 @@ class HallController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $hall = Hall::find($id);
+        $hall = Hall::find($request['id']);
         $hall->delete();
         return redirect('admin');
     }

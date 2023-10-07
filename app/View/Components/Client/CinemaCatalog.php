@@ -1,20 +1,21 @@
 <?php
 
-namespace App\View\Components\admin;
+namespace App\View\Components\client;
 
 use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+\Moment\Moment::setLocale('ru_RU');
 
-class ShowtimesTimeline extends Component
+class CinemaCatalog extends Component
 {
-    public $showtimes;
+    public $catalogData;
     /**
      * Create a new component instance.
      */
-    public function __construct($showtimes)
+    public function __construct($catalogData)
     {
-        $this->showtimes = $showtimes;
+        $this->catalogData = $catalogData;
     }
 
     /**
@@ -22,6 +23,6 @@ class ShowtimesTimeline extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.showtimes-timeline');
+        return view('components.client.cinema-catalog');
     }
 }

@@ -17,4 +17,9 @@ class Hall extends Model
         'priceVip',
         'active',
     ];
+
+    public function showtimes()
+    {
+        return $this->hasMany('App\Models\Showtime');
+    }
 }

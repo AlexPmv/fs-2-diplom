@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [App\Http\Controllers\HallController::class, 'index'])->name('admin');
     Route::post('/add_hall', [App\Http\Controllers\HallController::class, 'store'])->name('add_hall');
+    Route::post('/hall_activate', [App\Http\Controllers\HallController::class, 'activateHall'])->name('hall_activate');
     Route::post('/add_movie', [App\Http\Controllers\MovieController::class, 'store'])->name('add_movie');
     Route::post('/add_showtime', [App\Http\Controllers\ShowtimeController::class, 'store'])->name('add_showtime');
     Route::post('/update_seat_count', [App\Http\Controllers\HallController::class, 'updateSeatCount'])->name('update_seat_count');
@@ -28,6 +29,4 @@ Route::middleware(['auth'])->group(function () {
 
 Auth::routes();
 
-Route::get('/{date?}', function ($date = null) {
-    return view('client.index', ['date' => $date]);
-})->name('/');
+Route::get('/{date?}', [App\Http\Controllers\CinemaCatalogController::class, 'index'])->name('/');

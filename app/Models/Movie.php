@@ -14,4 +14,10 @@ class Movie extends Model
         'image',
         'duration',
     ];
+
+    public function showtimes()
+    {
+        return $this->hasMany('App\Models\Showtime');
+    }
+
 }

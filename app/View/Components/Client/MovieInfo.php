@@ -1,20 +1,21 @@
 <?php
 
-namespace App\View\Components\admin;
+namespace App\View\Components\client;
 
+use App\Models\Movie;
 use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class ShowtimesTimeline extends Component
+class MovieInfo extends Component
 {
-    public $showtimes;
+    public $movie;
     /**
      * Create a new component instance.
      */
-    public function __construct($showtimes)
+    public function __construct($movieId)
     {
-        $this->showtimes = $showtimes;
+        $this->movie = Movie::find($movieId);
     }
 
     /**
@@ -22,6 +23,6 @@ class ShowtimesTimeline extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.admin.showtimes-timeline');
+        return view('components.client.movie-info');
     }
 }

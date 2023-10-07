@@ -367,11 +367,11 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
   .conf-step__selectors-box .conf-step__radio:hover + .conf-step__selector {
     background-color: rgba(255, 255, 255, 0.9); }
 
-.hall-config, .hall-price {
+.hall-config, .hall-price, .hall-activate {
   display: none;
 }
 
-.hall-config.active, .hall-price.active {
+.hall-config.active, .hall-price.active, .hall-activate.active {
   display: block;
 }
 

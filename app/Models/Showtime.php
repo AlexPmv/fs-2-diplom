@@ -15,4 +15,9 @@ class Showtime extends Model
         'movie_name',
         'time',
     ];
+
+    public function movie()
+    {
+        return $this->belongsTo('App\Models\Movie');
+    }
 }

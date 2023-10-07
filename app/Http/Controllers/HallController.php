@@ -109,7 +109,7 @@ class HallController extends Controller
             }
         }
 
-        return redirect('admin')->withFragment('#hall-config-section');
+        return redirect('admin')->withFragment('#hall-config-section')->with(['checkedHallConfigTab' => $request->id]);
     }
     public function updatePrice(Request $request)
     {
@@ -137,6 +137,18 @@ class HallController extends Controller
                 ->header('Content-Type', 'text/plain');
             }
         }
+    }
+
+    public function activateHall(Request $request)
+    {
+        $hall = Hall::find($request->hall_id);
+
+        if ($hall) {
+            $hall->active ? $hall->active = false : $hall->active = true;
+            $hall->save();
+        }
+
+        return redirect('admin')->withFragment('#hall-activate-section')->with(['checkedHallActivateTab' => $request->hall_id]);
     }
 
     /**

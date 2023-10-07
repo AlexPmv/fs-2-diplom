@@ -8,30 +8,32 @@ use Illuminate\Contracts\View\View;
 
 class NavDay extends Component
 {
-    public $navDayData;
+    public $showtimeDate;
+    public $selectedDate;
     
     /**
      * Create a new component instance.
      */
-    public function __construct($showtimeDate)
+    public function __construct($showtimeDate, $selectedDate)
     {
-        $this->navDayData = $showtimeDate;
-        $this->navDayData['class'] = 'page-nav__day';
+        $this->showtimeDate = $showtimeDate;
+        $this->selectedDate = $selectedDate;
+        $this->showtimeDate['class'] = 'page-nav__day';
         $this->сlassFormation();
     }
 
     protected function сlassFormation() {
 
-        if ($this->navDayData['date'] === (new \Moment\Moment('now', 'Europe/Moscow'))->format('Y-m-d')) {
-            $this->navDayData['class'] .= ' page-nav__day_today';
+        if ($this->showtimeDate['date'] === (new \Moment\Moment('now', 'Europe/Moscow'))->format('Y-m-d')) {
+            $this->showtimeDate['class'] .= ' page-nav__day_today';
         }
 
-        if ($this->navDayData['date'] === $this->navDayData['selectedDate']) {
-            $this->navDayData['class'] .= ' page-nav__day_chosen';
+        if ($this->showtimeDate['date'] === $this->selectedDate) {
+            $this->showtimeDate['class'] .= ' page-nav__day_chosen';
         }
 
-        if ($this->navDayData['weekday'] === 'сб' || $this->navDayData['weekday'] === 'вс') {
-            $this->navDayData['class'] .= ' page-nav__day_weekend';
+        if ($this->showtimeDate['weekday'] === 'сб' || $this->showtimeDate['weekday'] === 'вс') {
+            $this->showtimeDate['class'] .= ' page-nav__day_weekend';
         }
 
         

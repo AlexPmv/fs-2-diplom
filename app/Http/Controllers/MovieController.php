@@ -34,6 +34,8 @@ class MovieController extends Controller
             [
                 'name' => 'required|unique:halls',
                 'duration' => 'required|numeric',
+                'description' => 'required|string',
+                'country' => 'required|string',
                 'image' => 'required|mimes:jpeg,gif,bmp,png|max:1024',
             ],
             [
@@ -41,6 +43,10 @@ class MovieController extends Controller
                 'name.unique' => 'Фильм с таким именем уже существует',
                 'duration.numeric' => 'В поле "продолжитель фильма" используются только цифры',
                 'duration.required' => 'Продолжительность фильма не заполнено',
+                'description.string' => 'В поле "Описание фильма" должен быть текст',
+                'description.required' => 'Описание фильма не заполнено',
+                'country.string' => 'В поле "Страна" должен быть текст',
+                'country.required' => 'Страна не заполнена',
                 'image.required' => 'Не выбран файл картинки',
                 'image.mimes' => 'Требуемые форматы картинки: jpeg, gif, bmp, png',
                 'image.max' => 'Максимальный размер картинки 1024 пикселя',
@@ -54,6 +60,8 @@ class MovieController extends Controller
         $movie = new Movie;
         $movie->name = $request->name;
         $movie->duration = $request->duration;
+        $movie->description = $request->description;
+        $movie->country = $request->country;
         $movie->image = '/posters/' . $filename;
         $movie->save();
         return redirect('admin')->withFragment('#showtime-section');

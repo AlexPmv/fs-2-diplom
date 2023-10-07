@@ -12,8 +12,12 @@
         <form action="add_movie" method="post" accept-charset="utf-8" enctype="multipart/form-data">
           @csrf
           <label class="conf-step__label conf-step__label-fullsize" for="name">
-            Название фильма:
+            Название:
             <input class="conf-step__input" type="text" placeholder="Например, &laquo;Гражданин Кейн&raquo;" name="name" required style="margin-bottom: 15px">
+            Описание:
+            <input class="conf-step__input" type="text" placeholder="Например, этот фильм про..." name="description" required style="margin-bottom: 15px">
+            Страна:
+            <input class="conf-step__input" type="text" placeholder="Например, США" name="country" required style="margin-bottom: 15px">
             Продолжительность фильма (в минутах):
             <input class="conf-step__input" type="number" placeholder="Например, 120" name="duration" required style="margin-bottom: 15px">
             Постер:

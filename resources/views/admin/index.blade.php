@@ -54,7 +54,9 @@
         <h2 class="conf-step__title">Управление залами</h2>
       </header>
       <div class="conf-step__wrapper">
+        @if(count($data))
         <p class="conf-step__paragraph">Доступные залы:</p>
+        @endif
         <ul class="conf-step__list">
           @for($i = 0; $i < count($data); $i++)
             <li>{{$data[$i]->name}}
@@ -66,6 +68,7 @@
       </div>
     </section>
     
+    @if(count($data))
     <section class="conf-step">
       <a class="anchor-link" name="hall-config-section"></a>
       <header class="conf-step__header conf-step__header_opened">
@@ -75,12 +78,12 @@
         <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
         <ul class="conf-step__selectors-box">
           @for($i = 0; $i < count($data); $i++)
-            <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{$data[$i]->name}}" {{$i === 0 ? 'checked' : null}} onclick="switchHallTabs({{$data[$i]->id}}, 'hall-config')"><span class="conf-step__selector">{{$data[$i]->name}}</span></li>
+            <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{$data[$i]->name}}" {{($data[$i]->id == (session()->get('checkedHallConfigTab') ? session()->get('checkedHallConfigTab') : $data[0]->id)) ? 'checked' : null}} onclick="switchHallTabs({{$data[$i]->id}}, 'hall-config')"><span class="conf-step__selector">{{$data[$i]->name}}</span></li>
           @endfor
         </ul>
         
         @for($i = 0; $i < count($data); $i++)
-        <div class="hall-config {{$i === 0 ? 'active' : null}}" id="hall-config-{{$data[$i]->id}}">
+        <div class="hall-config {{($data[$i]->id == (session()->get('checkedHallConfigTab') ? session()->get('checkedHallConfigTab') : $data[0]->id)) ? 'active' : null}}" id="hall-config-{{$data[$i]->id}}">
           <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
           <div class="conf-step__legend">
             <form action="update_seat_count" method="post">
@@ -178,15 +181,25 @@
       <header class="conf-step__header conf-step__header_opened">
         <h2 class="conf-step__title">Открыть продажи</h2>
       </header>
-      @for($i = 0; $i < count($data); $i++)
-        <div class="hall-active {{$i === 0 ? 'active' : null}}" id="hall-active-{{$data[$i]->id}}">
-          <div class="conf-step__wrapper text-center">
-            <p class="conf-step__paragraph">Всё готово, теперь можно:</p>
-            <button class="conf-step__button conf-step__button-accent">Открыть продажу билетов</button>
-          </div>
+      <div class="conf-step__wrapper text-center" style="margin-bottom: 70px">
+        <p class="conf-step__paragraph">Всё готово, теперь можно открыть продажу билетов, выберите зал:</p>
+        <ul class="conf-step__selectors-box">
+          @for($i = 0; $i < count($data); $i++)
+            <li><input type="radio" class="conf-step__radio" name="activate-hall" value="{{$data[$i]->name}}" {{($data[$i]->id == (session()->get('checkedHallActivateTab') ? session()->get('checkedHallActivateTab') : $data[0]->id)) ? 'checked' : null}} onclick="switchHallTabs({{$data[$i]->id}}, 'hall-activate')"><span class="conf-step__selector">{{$data[$i]->name}}</span></li>
+          @endfor
+        </ul>
+        @for($i = 0; $i < count($data); $i++)
+        <div class="hall-activate {{($data[$i]->id == (session()->get('checkedHallActivateTab') ? session()->get('checkedHallActivateTab') : $data[0]->id)) ? 'active' : null}}" id="hall-activate-{{$data[$i]->id}}" style="padding: 0">
+          <form action="hall_activate" method="POST" accept-charset="utf-8">
+            @csrf
+            <input class="conf-step__input" type="hidden" name="hall_id" value="{{$data[$i]->id}}">
+            <button class="conf-step__button conf-step__button-accent" {{$data[$i]->active ? 'style=background-color:crimson' : null}}>{{$data[$i]->active ? 'Закрыть продажу билетов' : 'Открыть продажу билетов'}}</button>
+          </form>
         </div>
-      @endfor    
-    </section>    
+        @endfor 
+      </div>
+    </section>
+    @endif    
   </main>
 
   <script src="{{asset('/assets/admin/js/accordeon.js')}}"></script>

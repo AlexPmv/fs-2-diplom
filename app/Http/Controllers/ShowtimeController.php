@@ -30,6 +30,22 @@ class ShowtimeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(
+            [
+                'hall_id' => 'required|numeric',
+                'movie_id' => 'required|numeric',
+                'start_time' => 'required|string',
+            ],
+            [
+                'hall_id.required' => 'id зала не заполнено',
+                'hall_id.numeric' => 'id зала должно быть числом',
+                'movie_id.required' => 'id фильма не заполнено',
+                'movie_id.numeric' => 'id фильма должно быть числом',
+                'start_time.required' => 'Время начала сеанса не заполнено',
+                'start_time.string' => 'Время время сеанса в нужной формате',
+            ]
+        );
+
         $showtime = new Showtime();
         $showtime->hall_id = $request['hall_id'];
         $showtime->movie_id = $request['movie_id'];

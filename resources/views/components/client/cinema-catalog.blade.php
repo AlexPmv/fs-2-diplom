@@ -7,7 +7,7 @@
           <h3 class="movie-seances__hall-title">{{App\Models\Hall::find($showtimesByHalls['hall_id'])->name}}</h3>
             <ul class="movie-seances__list">
               @foreach($showtimesByHalls['showtimes'] as $showtime)
-                <li class="movie-seances__time-block"><a class="movie-seances__time" href="hall.html">{{$showtime->start_time}}</a></li>
+                <li class="movie-seances__time-block"><a class="movie-seances__time" href="{{route('hall', ['showtimeId' => $showtime->id, 'selectedDate' => $selectedDate])}}">{{$showtime->start_time}}</a></li>
               @endforeach
             </ul>
         </div>

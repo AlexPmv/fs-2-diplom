@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ИдёмВКино</title>
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="{{asset('assets/client/css/normalize.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/client/css/styles.css')}}">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
 </head>
 
@@ -22,7 +22,7 @@
       <header class="tichet__check">
         <h2 class="ticket__check-title">Вы выбрали билеты:</h2>
       </header>
-      
+
       <div class="ticket__info-wrapper">
         <p class="ticket__info">На фильм: <span class="ticket__details ticket__title">Звёздные войны XXIII: Атака клонированных клонов</span></p>
         <p class="ticket__info">Места: <span class="ticket__details ticket__chairs">6, 7</span></p>

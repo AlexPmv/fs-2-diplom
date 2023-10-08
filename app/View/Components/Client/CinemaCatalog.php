@@ -10,12 +10,14 @@ use Illuminate\Contracts\View\View;
 class CinemaCatalog extends Component
 {
     public $catalogData;
+    public $selectedDate;
     /**
      * Create a new component instance.
      */
-    public function __construct($catalogData)
+    public function __construct($catalogData, $selectedDate)
     {
         $this->catalogData = $catalogData;
+        $this->selectedDate = $selectedDate;
     }
 
     /**

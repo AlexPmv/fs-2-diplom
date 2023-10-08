@@ -30,3 +30,5 @@ Route::middleware(['auth'])->group(function () {
 Auth::routes();
 
 Route::get('/{date?}', [App\Http\Controllers\CinemaCatalogController::class, 'index'])->name('/');
+Route::get('hall/{showtimeId}/{selectedDate}', [App\Http\Controllers\HallSeatSelectionController::class, 'getHallConfiguration'])->name('hall');
+Route::get('payment/{hallConfigIdData}/{selectedDate}', [App\Http\Controllers\PaymentController::class, 'indexPayment'])->name('payment');

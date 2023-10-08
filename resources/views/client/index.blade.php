@@ -23,7 +23,7 @@
   </nav>
 
   <main style="margin-bottom: 50px">
-    <x-client.cinema-catalog :catalogData="$catalogData"/>
+    <x-client.cinema-catalog :catalogData="$catalogData" :selectedDate="$selectedDate"/>
   </main>
 
 </body>

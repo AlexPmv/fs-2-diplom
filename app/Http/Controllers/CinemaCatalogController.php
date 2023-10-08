@@ -53,17 +53,17 @@ class CinemaCatalogController extends Controller
             $hallsWithShowtimes[] = Hall::find($hall->id)->showtimes;
         }
 
-        $movieIdfromShowtimes = [];
+        $moviesInActiveHalls = [];
 
         foreach($hallsWithShowtimes as $showtimes) {
             foreach($showtimes as $showtime) {
-                $movieIdfromShowtimes[] = $showtime['movie_id'];
+                $moviesInActiveHalls[] = $showtime['movie_id'];
             }
         }
 
         $todayMoviesId = [];
   
-        foreach (array_unique($movieIdfromShowtimes) as $movieId) {
+        foreach (array_unique($moviesInActiveHalls) as $movieId) {
             $todayMoviesId[] = $movieId;
         }
 

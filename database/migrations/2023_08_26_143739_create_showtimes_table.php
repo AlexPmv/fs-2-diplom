@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('hall_id')->references('id')->on('halls')->onDelete('cascade');
             $table->integer('movie_id')->unsigned();
             $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
-            $table->string('movie_name');
             $table->time('start_time');
             $table->timestamps();
         });

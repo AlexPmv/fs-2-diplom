@@ -15,12 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('showtime_id')->unsigned();
             $table->foreign('showtime_id')->references('id')->on('showtimes');
-            $table->string('hall');
-            $table->string('movie');
-            $table->integer('row');
-            $table->integer('seat');
+            $table->integer('hallConfig_id')->unsigned();
+            $table->foreign('hallConfig_id')->references('id')->on('hall_configs');
             $table->date('date');
-            $table->time('time');
             $table->timestamps();
         });
     }

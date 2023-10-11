@@ -50,7 +50,6 @@ class ShowtimeController extends Controller
         $showtime->hall_id = $request['hall_id'];
         $showtime->movie_id = $request['movie_id'];
         $showtime->start_time = $request['start_time'];
-        $showtime->movie_name = Movie::find($request['movie_id'])->name;
         $showtime->save();
         return redirect('admin')->withFragment('#showtime-section');
     }

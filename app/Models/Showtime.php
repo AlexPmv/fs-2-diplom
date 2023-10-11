@@ -13,11 +13,14 @@ class Showtime extends Model
         'movie_id',
         'hall_id',
         'start_time',
-        'movie_name',
     ];
 
     public function movie()
     {
         return $this->belongsTo('App\Models\Movie');
+    }
+    public function hall()
+    {
+        return $this->belongsTo('App\Models\Hall');
     }
 }

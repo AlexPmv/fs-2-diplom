@@ -10,8 +10,8 @@ class HallConfig extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'hall_id',
+        'hallConfig_id',
         'row',
         'seat',
         'status',

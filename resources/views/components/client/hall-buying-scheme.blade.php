@@ -4,7 +4,7 @@
         @for($i = 1; $i < ($hall->rowCount + 1); $i++)
             <div class="buying-scheme__row">
             @foreach (array_filter($hallConfig, fn($seat) => $seat['row'] == $i) as $seat)
-                <span class="buying-scheme__chair buying-scheme__chair_{{$seat['status']}}" onclick="seatClickStatusChange(this)" data-seat-id="{{$seat['id']}}" data-seat-status="{{$seat['status']}}" data-seat-origin-status="{{$seat['status']}}"></span>
+                <span class="buying-scheme__chair buying-scheme__chair_{{$seat['status']}}" onclick="seatClickStatusChange(this, {{$hall->priceStandart}}, {{$hall->priceVip}})" data-seat-id="{{$seat['id']}}" data-seat-status="{{$seat['status']}}" data-seat-origin-status="{{$seat['status']}}"></span>
             @endforeach
             </div>
         @endfor

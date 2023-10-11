@@ -22,15 +22,14 @@
       <header class="tichet__check">
         <h2 class="ticket__check-title">Вы выбрали билеты:</h2>
       </header>
-
       <div class="ticket__info-wrapper">
-        <p class="ticket__info">На фильм: <span class="ticket__details ticket__title">Звёздные войны XXIII: Атака клонированных клонов</span></p>
-        <p class="ticket__info">Места: <span class="ticket__details ticket__chairs">6, 7</span></p>
-        <p class="ticket__info">В зале: <span class="ticket__details ticket__hall">1</span></p>
-        <p class="ticket__info">Начало сеанса: <span class="ticket__details ticket__start">18:30</span></p>
-        <p class="ticket__info">Стоимость: <span class="ticket__details ticket__cost">600</span> рублей</p>
+        <p class="ticket__info">На фильм: <span class="ticket__details ticket__title">{{$paymentData['movieName']}}</span></p>
+        <p class="ticket__info">Места: <span class="ticket__details ticket__chairs">{{$paymentData['seats']}}</span></p>
+        <p class="ticket__info">В зале: <span class="ticket__details ticket__hall">{{$paymentData['hallName']}}</span></p>
+        <p class="ticket__info">Начало сеанса: <span class="ticket__details ticket__start">{{$paymentData['startTime']}}</span></p>
+        <p class="ticket__info">Стоимость: <span class="ticket__details ticket__cost">{{$paymentData['sum']}}</span> рублей</p>
 
-        <button class="acceptin-button" onclick="location.href='ticket.html'" >Получить код бронирования</button>
+        <button class="acceptin-button" onclick="location.href='{{route('ticket', ['showtimeId' => $paymentData['showtimeId'], 'hallConfigIdData' => $paymentData['hallConfigIdData'], 'selectedDate' => $paymentData['selectedDate']])}}'" >Получить код бронирования</button>
 
         <p class="ticket__hint">После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.</p>
         <p class="ticket__hint">Приятного просмотра!</p>

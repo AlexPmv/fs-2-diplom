@@ -11,6 +11,8 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
 </head>
 
+@includeIf('client.info_popup')
+
 <body>
   <header class="page-header">
     <h1 class="page-header__title">Идём<span>в</span>кино</h1>
@@ -19,11 +21,10 @@
     <section class="buying">
       <x-client.hall-buying-info :showtime="$showtime"/>
       <x-client.hall-buying-scheme :showtime="$showtime" :selectedDate="$selectedDate"/>
-      <button class="acceptin-button" onclick="location.href='{{route('payment', ['hallConfigIdData' => '[1,2,3]', 'selectedDate' => $selectedDate])}}'" >Забронировать</button>
+      <button class="acceptin-button" onclick="showInfoPopup('Сообщение:', 'Сначала выберете места!')" data-showtime="{{$showtime->id}}" data-selected-date="{{$selectedDate}}" style="cursor: pointer">Забронировать</button>
     </section>     
   </main>
   
   <script src="{{asset('/assets/client/js/index.js')}}"></script>
-
 </body>
 </html>

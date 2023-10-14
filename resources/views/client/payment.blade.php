@@ -11,9 +11,11 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
 </head>
 
+@includeIf('client.info_popup')
+
 <body>
   <header class="page-header">
-    <h1 class="page-header__title">Идём<span>в</span>кино</h1>
+    <h1 class="page-header__title"><a href="{{route('/')}}">Идём<span>в</span>кино</a></h1>
   </header>
   
   <main>

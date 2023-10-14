@@ -34,17 +34,13 @@ class TicketController extends Controller
     {
         $hallConfigIdArray = explode('&', $hallConfigIdData);
 
-        // foreach ($hallConfigIdArray as $hallConfigId) {
-        //     $ticket = new Ticket;
-        //     $ticket->showtime_id = $showtimeId;
-        //     $ticket->hallConfig_id = $hallConfigId;
-        //     $ticket->date = $selectedDate;
-        //     $ticket->save();
-
-        //     if (!$ticket) {
-        //         return;
-        //     }
-        // }
+        foreach ($hallConfigIdArray as $hallConfigId) {
+            $ticket = new Ticket;
+            $ticket->showtime_id = $showtimeId;
+            $ticket->hallConfig_id = $hallConfigId;
+            $ticket->date = $selectedDate;
+            $ticket->save();
+        }
 
         $ticketsData = [];
         $seats = [];

@@ -11,11 +11,7 @@ class Ticket extends Model
 
     protected $fillable = [
         'showtime_id',
-        'hall',
-        'movie',
-        'row',
-        'seat',
+        'hallConfig_id',
         'date',
-        'time',
     ];
 }

@@ -1,6 +1,20 @@
+let inputPoster = document.getElementById('poster-input-file')
+let imageName = document.querySelector('.poster-file-name')
+
+inputPoster.addEventListener('change', () => {
+    let inputImage = document.querySelector("input[type=file]").files[0];
+    imageName.innerText = inputImage.name;
+})
+
 function switchPopup(el) {
   if(el) {
     el.classList.toggle('active');
+  }
+}
+
+function deletePopup(el) {
+  if(el) {
+    el.remove();
   }
 }
 

@@ -12,10 +12,13 @@
 </head>
 
 @includeIf('client.info_popup')
+@if ($errors->any())
+  @includeIf('client.alert_popup')
+@endif
 
 <body>
   <header class="page-header">
-    <h1 class="page-header__title">Идём<span>в</span>кино</h1>
+    <h1 class="page-header__title"><a href="{{route('/')}}">Идём<span>в</span>кино</a></h1>
   </header>
   <main>
     <section class="buying">

@@ -13,6 +13,8 @@ class Movie extends Model
         'name',
         'image',
         'duration',
+        'description',
+        'country',
     ];
 
     public function showtimes()

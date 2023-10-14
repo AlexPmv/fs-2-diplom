@@ -35,6 +35,10 @@ body {
 input[type='radio'], input[type='submit'], button, .conf-step__header, select {
   cursor: pointer; }
 
+input[type="file"]{
+  display: none;
+}
+
 .text-center {
   text-align: center; }
 
@@ -197,7 +201,7 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
     position: absolute;
     left: -14px; }
 
-.conf-step__button, .login__button {
+.conf-step__button, .login__button, .select-poster {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12);
   border-radius: 3px;
   border: none;
@@ -466,6 +470,30 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
   height: 40px;
   box-sizing: content-box;
   width: calc(1440px * 0.5); }
+
+.select-poster {
+  display: block;
+  width: max-content;
+  color: black;
+  margin-top: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.select-poster:hover {
+  color: white;
+  background-color: #16A6AF;
+}
+
+.poster-file-name {
+  font-size: 15px;
+}
+
+.input-file__label {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
 
 .conf-step__seances-movie {
   position: absolute;

@@ -11,6 +11,12 @@ function switchPopup(el) {
   }
 }
 
+function deletePopup(el) {
+  if(el) {
+    el.remove();
+  }
+}
+
 function seatClickStatusChange(el, priceStandart, priceVip) {
   sum = document.getElementById('total-sum')
 

@@ -21,7 +21,11 @@
             Продолжительность фильма (в минутах):
             <input class="conf-step__input" type="number" placeholder="Например, 120" name="duration" required style="margin-bottom: 15px">
             Постер:
-            <input class="conf-step__input" type="file" name="image" required>
+            <label class="input-file__label" for="poster-input-file">
+              <input class="conf-step__input" type="file" name="image" id="poster-input-file" required>
+              <span class="select-poster">Выберите картинку</span>
+              <span class="poster-file-name"></span>
+            </label>
           </label>
           <div class="conf-step__buttons text-center">
             <input type="submit" value="Добавить фильм" class="conf-step__button conf-step__button-accent">

@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 use App\Models\Hall;
 use App\Models\Showtime;
 use App\Models\HallConfig;
+use App\Models\Ticket;
 use Illuminate\Contracts\View\View;
 
 class HallBuyingScheme extends Component
@@ -21,6 +22,22 @@ class HallBuyingScheme extends Component
     {
         $this->hall = Hall::find($showtime->hall_id);
         $this->hallConfig = HallConfig::all()->where('hall_id', $this->hall->id)->toArray();
+
+        $takenTickets = $showtime->tickets->where('date', $selectedDate);
+
+        foreach ($takenTickets as $takenTicket) {
+            $hallConfigId = $takenTicket->hallConfig_id;
+
+            $this->hallConfig = array_map(function($hallConfigSeat) use ($hallConfigId) {
+                                    if ($hallConfigSeat['id'] === $hallConfigId) {
+                                        $hallConfigSeat['status'] = 'taken';
+                                        return $hallConfigSeat;
+                                    } else  {
+                                        return $hallConfigSeat;
+                                    }
+                                }, $this->hallConfig);
+        }
+
         $this->selectedDate = $selectedDate;
 
     }

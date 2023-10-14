@@ -11,7 +11,6 @@ class HallConfig extends Model
 
     protected $fillable = [
         'hall_id',
-        'hallConfig_id',
         'row',
         'seat',
         'status',

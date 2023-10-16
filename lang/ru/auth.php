@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'failed' => 'Authorization error',
-    'password' => 'Incorrect password',
-    'throttle' => 'To much attempts. Try after :seconds seconds.',
+    'failed' => 'Неверное имя пользователя или пароль',
+    'password' => 'Некорректный пароль',
+    'throttle' => 'Слишком много попыток входа. Пожалуйста, попробуйте ещё раз через :seconds секунд',
 
 ];

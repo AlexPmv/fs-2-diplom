@@ -24,7 +24,7 @@
   </nav>
 
   <main style="margin-bottom: 50px">
-    <x-client.cinema-catalog :catalogData="$catalogData" :selectedDate="$selectedDate"/>
+    <x-client.cinema-catalog :catalogData="$catalogData" :currentDate="$showtimePeriod[0]['date']" :selectedDate="$selectedDate"/>
   </main>
 
 </body>

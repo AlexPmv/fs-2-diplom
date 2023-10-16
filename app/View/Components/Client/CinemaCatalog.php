@@ -11,13 +11,15 @@ class CinemaCatalog extends Component
 {
     public $catalogData;
     public $selectedDate;
+    public $currentDate;
     /**
      * Create a new component instance.
      */
-    public function __construct($catalogData, $selectedDate)
+    public function __construct($catalogData, $currentDate, $selectedDate)
     {
         $this->catalogData = $catalogData;
         $this->selectedDate = $selectedDate;
+        $this->currentDate = $currentDate;
     }
 
     /**

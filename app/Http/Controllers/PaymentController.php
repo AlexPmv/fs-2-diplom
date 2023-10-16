@@ -28,7 +28,7 @@ class PaymentController extends Controller
                 $errors[] = "Место $hallConfig->seat (ряд $hallConfig->row) уже занято";
             }
 
-            return back()->withErrors($errors);
+            return redirect()->back()->withErrors($errors);
         }
         
         $paymentData = [];

@@ -15,6 +15,8 @@
   box-sizing: border-box; }
 
 a {
+  text-decoration: none;
+  color: inherit;
   text-decoration: none;}  
 
 li {
@@ -201,7 +203,7 @@ input[type="file"]{
     position: absolute;
     left: -14px; }
 
-.conf-step__button, .login__button, .select-poster {
+.conf-step__button, .login__button, .select-poster, .register__button {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.24), 0px 0px 3px rgba(0, 0, 0, 0.12);
   border-radius: 3px;
   border: none;
@@ -212,16 +214,16 @@ input[type="file"]{
   transition-property: background-color;
   transition-duration: .5s;
   transition-timing-function: ease; }
-  .conf-step__button:hover, .conf-step__button:focus, .login__button:hover, .login__button:focus {
+  .conf-step__button:hover, .conf-step__button:focus, .login__button:hover, .login__button:focus, .register__button:hover, .register__button:focus {
     background-color: #EEEAF1;
     outline: none; }
-  .conf-step__button:active, .login__button:active {
+  .conf-step__button:active, .login__button:active, .register__button:active {
     position: relative;
     top: 2px;
     background-color: #63536C;
     color: #FFFFFF;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75); }
-  .conf-step__button + .conf-step__button, .login__button + .conf-step__button, .conf-step__button + .login__button, .login__button + .login__button {
+  .conf-step__button + .conf-step__button, .login__button + .conf-step__button, .conf-step__button + .login__button, .login__button + .login__button, .register__button + .conf-step__button {
     margin-left: 12px; }
 
 .conf-step__buttons {
@@ -232,15 +234,15 @@ input[type="file"]{
   padding: 12px 32px;
   margin-top: 17px; }
 
-.conf-step__button.conf-step__button-accent, .login__button {
+.conf-step__button.conf-step__button-accent, .login__button, .register__button {
   color: #FFFFFF;
   background-color: #16A6AF;
   padding: 12px 32px;
   margin-top: 17px; }
-  .conf-step__button.conf-step__button-accent:hover, .conf-step__button.conf-step__button-accent:focus, .login__button:hover, .login__button:focus {
+  .conf-step__button.conf-step__button-accent:hover, .conf-step__button.conf-step__button-accent:focus, .login__button:hover, .login__button:focus, .register__button:hover, .register__button:focus {
     background-color: #2FC9D2;
     outline: none; }
-  .conf-step__button.conf-step__button-accent:active, .login__button:active {
+  .conf-step__button.conf-step__button-accent:active, .login__button:active, .register__button:active {
     position: relative;
     top: 2px;
     background-color: #146C72;
@@ -293,7 +295,7 @@ input[type="file"]{
   .conf-step__label-fullsize .conf-step__input {
     width: 100%; }
 
-.conf-step__input, .login__input {
+.conf-step__input, .login__input, .register__input {
   display: block;
   width: 100px;
   margin-top: 1px;
@@ -301,7 +303,7 @@ input[type="file"]{
   font-size: 1.6rem;
   color: #000000;
   border: 1px solid #b7b7b7; }
-  .conf-step__input:focus, .login__input:focus {
+  .conf-step__input:focus, .login__input:focus, .register__input:focus {
     outline: 1px #CF87FF solid;
     outline-offset: -1px; }
 
@@ -521,29 +523,30 @@ input[type="file"]{
     left: 0;
     background-color: #848484; }
 
-.login {
+.login, .register {
   width: 480px;
   margin: 0 auto;
   position: relative;
   background-color: rgba(234, 233, 235, 0.95); }
-  .login__wrapper {
+  .login__wrapper, .register__wrapper {
     padding: 35px 104px; }
-  .login__header {
+  .login__header, .register__header {
     position: relative;
     box-sizing: border-box;
     padding: 16px 104px;
     background-color: #63536C;
     color: #FFFFFF; }
-  .login__title {
+  .login__title, .register__title {
     font-size: 2.2rem;
     font-weight: 700;
     text-transform: uppercase; }
-  .login__label {
+  .login__label, .register__label {
+    display: block;
     width: 100%;
     margin-bottom: 0.8rem; }
-    .login__label:last-of-type {
+    .login__label:last-of-type, .register__label:last-of-type {
       margin-bottom: 0; }
-  .login__input {
+  .login__input, .register__input {
     width: 100%; }
 
 .popup {

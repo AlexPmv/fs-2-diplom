@@ -11,7 +11,6 @@ class CinemaCatalogController extends Controller
 {
     public $showtimePeriod = [];
     public $selectedDate;
-    public $catalogData = [];
     public function index($date = null)
     {
         $dateExist = false;
@@ -39,54 +38,6 @@ class CinemaCatalogController extends Controller
             $this->selectedDate = $date;
         };
 
-        $this->getCatalogData();
-
-        return view('client.index', ['showtimePeriod' => $this->showtimePeriod, 'selectedDate' => $this->selectedDate, 'catalogData' => $this->catalogData]);
-    }
-
-    public function getCatalogData()
-    {
-        $activeHalls = Hall::all()->where('active', true);
-        $hallsWithShowtimes = [];
-
-        foreach($activeHalls as $hall) {
-            $hallsWithShowtimes[] = Hall::find($hall->id)->showtimes;
-        }
-
-        $moviesInActiveHalls = [];
-
-        foreach($hallsWithShowtimes as $showtimes) {
-            foreach($showtimes as $showtime) {
-                $moviesInActiveHalls[] = $showtime['movie_id'];
-            }
-        }
-
-        $todayMoviesId = [];
-  
-        foreach (array_unique($moviesInActiveHalls) as $movieId) {
-            $todayMoviesId[] = $movieId;
-        }
-
-        for ($i = 0; $i < count($todayMoviesId); $i++) {
-            $currentMovieId = $todayMoviesId[$i];
-            $movieData[$i]['movie_id'] = $currentMovieId;
-            $movieData[$i]['showtimesByHalls'] = [];
-
-            foreach($hallsWithShowtimes as $showtimes) {
-                $currentHallShowtimes = [];
-                $currentHallShowtimes['hall_id'] = $showtimes[0]['hall_id'];
-                $currentHallShowtimes['showtimes'] = [];
-
-                foreach($showtimes as $showtime) {
-                    if ($showtime['movie_id'] === $currentMovieId) {
-                        $currentHallShowtimes['showtimes'][] = $showtime;
-                    };
-                };
-
-                $movieData[$i]['showtimesByHalls'][] = $currentHallShowtimes;
-            }
-
-            $this->catalogData[] = $movieData[$i];
-        }
+        return view('client.index', ['showtimePeriod' => $this->showtimePeriod, 'selectedDate' => $this->selectedDate]);
     }
 }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Showtime;
 use App\Models\Movie;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Moment\Moment;
 
 class ShowtimeController extends Controller
 {
@@ -46,10 +48,50 @@ class ShowtimeController extends Controller
             ]
         );
 
+        $startTime = $request->start_time;
+        $endTime = (new Moment($request->start_time))->addMinutes(Movie::find($request->movie_id)->duration)->format('H:i');
+
+        $endLessStart = Carbon::createFromTimeString($endTime)->lt(Carbon::createFromTimeString($startTime));
+        $currentHallShowtimes = Showtime::where('hall_id', $request->hall_id)->get();
+        $overlappings = [];
+
+        foreach ($currentHallShowtimes as $showtime) {
+            if ($endLessStart) {
+                if ($showtime->start_time <= '23:59' && $showtime->end_time >= $startTime) {
+                    $overlappings[] = $showtime;
+                }
+
+                if ($showtime->start_time <= $endTime && $showtime->end_time <= $startTime) {
+                    $overlappings[] = $showtime;
+                }   
+                
+                if ($showtime->start_time > $showtime->end_time) {
+                    if ($showtime->start_time <= '23:59' && $showtime->end_time <= $startTime) {
+                        $overlappings[] = $showtime;
+                    } 
+                }
+            }
+
+            if ($showtime->start_time <= $endTime && $showtime->end_time >= $startTime) {
+                $overlappings[] = $showtime;
+            }
+        }
+
+        if (!empty($overlappings)) {
+            $errors[] = 'При попытке добавления найдены пересечения с другими сеансами:';
+
+            foreach ($overlappings as $overlapp) {
+                $errors[] = $overlapp->start_time . ' - ' . $overlapp->end_time;
+            }
+
+            return redirect()->back()->withErrors($errors)->withFragment('#showtime-section');
+        }
+
         $showtime = new Showtime();
-        $showtime->hall_id = $request['hall_id'];
-        $showtime->movie_id = $request['movie_id'];
-        $showtime->start_time = $request['start_time'];
+        $showtime->hall_id = $request->hall_id;
+        $showtime->movie_id = $request->movie_id;
+        $showtime->start_time = $startTime;
+        $showtime->end_time = $endTime;
         $showtime->save();
         return redirect('admin')->withFragment('#showtime-section');
     }

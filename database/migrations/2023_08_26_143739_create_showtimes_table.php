@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('showtimes', function (Blueprint $table) {
             $table->id();
-            $table->integer('hall_id')->unsigned();
+            $table->unsignedBigInteger('hall_id')->unsigned();
             $table->foreign('hall_id')->references('id')->on('halls')->onDelete('cascade');
-            $table->integer('movie_id')->unsigned();
+            $table->unsignedBigInteger('movie_id')->unsigned();
             $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
             $table->time('start_time');
+            $table->time('end_time');
             $table->timestamps();
         });
     }

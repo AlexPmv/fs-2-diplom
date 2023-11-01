@@ -9,7 +9,7 @@
               <ul class="movie-seances__list">
                 @foreach($showtimesByHalls['showtimes'] as $showtime)
                   @if($selectedDate === $currentDate)
-                    @if((new \Moment\Moment($currentDate . 'T' . $showtime->start_time . ':00', 'Europe/Moscow'))->fromNow()->getMinutes() > 0)
+                    @if((new \Moment\Moment($currentDate . 'T' . substr($showtime->start_time, 0, 5) . ':00', 'Europe/Moscow'))->fromNow()->getMinutes() > 0)
                       <li class="movie-seances__time-block"><span class="movie-seances__time missed" style="background-color: dimgrey">{{$showtime->start_time}}</span></li>
                     @else
                       <li class="movie-seances__time-block"><a class="movie-seances__time" href="{{route('hall', ['showtimeId' => $showtime->id, 'selectedDate' => $selectedDate])}}">{{$showtime->start_time}}</a></li>

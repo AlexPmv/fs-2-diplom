@@ -2,8 +2,13 @@ let inputPoster = document.getElementById('poster-input-file')
 let imageName = document.querySelector('.poster-file-name')
 
 inputPoster.addEventListener('change', () => {
-    let inputImage = document.querySelector("input[type=file]").files[0];
-    imageName.innerText = inputImage.name;
+  let inputImage = document.querySelector("input[type=file]").files[0];
+  imageName.innerText = inputImage.name;
+})
+
+inputPoster.addEventListener('invalid', (e) => {
+  e.preventDefault();
+  imageName.innerText = 'Необходимо добавить картинку!';
 })
 
 function switchPopup(el) {

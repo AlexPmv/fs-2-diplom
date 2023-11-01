@@ -1,7 +1,9 @@
 -Версия PHP на котором разрабатывался диплом: PHP 8.2.4
 -Перед запуском загрузки пакетов для работы с пакетом генерации qr кода (simple-qrcode) в php.ini нужно раскоментировать расширение: extension=gd
 -Для создания миграций введите команду: php artisan migrate
+-Далее для заполнения первичных данных, добавления администратора: php artisan db:seed
 -Для запуска: php artisan serve
+-Администратор: логин - admin@example.com, пароль - 123
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 

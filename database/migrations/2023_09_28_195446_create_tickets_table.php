@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('showtime_id')->unsigned();
+            $table->unsignedBigInteger('showtime_id')->unsigned();
             $table->foreign('showtime_id')->references('id')->on('showtimes');
-            $table->integer('hallConfig_id')->unsigned();
+            $table->unsignedBigInteger('hallConfig_id')->unsigned();
             $table->foreign('hallConfig_id')->references('id')->on('hall_configs');
             $table->date('date');
             $table->timestamps();

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Showtime;
 use App\Models\HallConfig;
 use App\Models\Ticket;
-use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -16,7 +15,7 @@ class PaymentController extends Controller
         $reservationCheck = [];
         
         foreach ($hallConfigIdArray as $seatId) {
-            $ticket = Ticket::get()->where('hallConfig_id', $seatId)->where('date', $selectedDate)->firstWhere('showtime_id', $showtimeId);
+            $ticket = Ticket::where('hallConfig_id', $seatId)->where('date', $selectedDate)->firstWhere('showtime_id', $showtimeId);
             $ticket ? array_push($reservationCheck, $ticket) : null;
         }
 

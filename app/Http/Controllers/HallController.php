@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hall;
 use App\Http\Controllers\Controller;
 use App\Models\HallConfig;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Illuminate\Validation\Validator;
 
@@ -98,14 +95,14 @@ class HallController extends Controller
                 if (!empty($hallConfig)) {
                     foreach ($hallConfig as $seat) {
                         $seat->delete();
-                    };
-                };
+                    }
+                }
     
                 for ($i = 1; $i < $request->rows + 1; $i++) {
                     for ($b = 1; $b < $request->seats + 1; $b++) {
                         (new HallConfigController)->store(['id' => $request->id, 'rows' => $i, 'seats' => $b]);
-                    };
-                };
+                    }
+                }
             }
         }
 
@@ -113,17 +110,21 @@ class HallController extends Controller
     }
     public function updatePrice(Request $request)
     {
-        $validator = FacadesValidator::make($request->all(), [
-            'priceStandart' => 'required|numeric|min:100',
-            'priceVip' => 'required|numeric|min:100',
-        ], [
+        $validator = FacadesValidator::make(
+            $request->all(), 
+            [
+                'priceStandart' => 'required|numeric|min:100',
+                'priceVip' => 'required|numeric|min:100',
+            ], 
+            [
             'priceStandart' => 'Минимальная значение поля цена 1: 100',
             'priceVip' => 'Минимальная значение поля цена 2: 100',
-        ]);
+            ]
+        );
 
         if ($validator->fails()) {
             return response()->json(['errors'=>$validator->errors()->all()]);
-        };
+        }
 
         $hall = Hall::find($request->id);
 
@@ -133,7 +134,7 @@ class HallController extends Controller
             $result = $hall->save();
 
             if ($result) {
-                return response(json_encode('Цены успешно сохранены!'), 200)
+                return response('Цены успешно сохранены!', 200)
                 ->header('Content-Type', 'text/plain');
             }
         }
@@ -143,10 +144,8 @@ class HallController extends Controller
     {
         $hall = Hall::find($request->hall_id);
 
-        if ($hall) {
-            $hall->active ? $hall->active = false : $hall->active = true;
-            $hall->save();
-        }
+        $hall->active = !$hall->active;
+        $hall->save();
 
         return redirect('admin')->withFragment('#hall-activate-section')->with(['checkedHallActivateTab' => $request->hall_id]);
     }

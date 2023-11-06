@@ -128,6 +128,5 @@ class ShowtimeController extends Controller
         $showtime = Showtime::find($request['id']);
         $showtime->delete();
         return redirect('admin')->withFragment('#showtime-section');
-
     }
 }

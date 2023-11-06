@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 class ShowtimeMovieSelect extends Component
 {
     public $movies;
+    
     /**
      * Create a new component instance.
      */

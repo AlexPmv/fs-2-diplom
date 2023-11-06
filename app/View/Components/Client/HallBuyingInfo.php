@@ -4,7 +4,6 @@ namespace App\View\Components\client;
 
 use Closure;
 use Illuminate\View\Component;
-use App\Models\Showtime;
 use App\Models\Movie;
 use App\Models\Hall;
 use Illuminate\Contracts\View\View;
@@ -17,6 +16,7 @@ class HallBuyingInfo extends Component
     public $movie;
     public $hall;
     public $showtime;
+    
     public function __construct($showtime)
     {
         $this->showtime = $showtime;

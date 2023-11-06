@@ -5,9 +5,7 @@ namespace App\View\Components\client;
 use Closure;
 use Illuminate\View\Component;
 use App\Models\Hall;
-use App\Models\Showtime;
 use App\Models\HallConfig;
-use App\Models\Ticket;
 use Illuminate\Contracts\View\View;
 
 class HallBuyingScheme extends Component
@@ -18,6 +16,7 @@ class HallBuyingScheme extends Component
     public $hall;
     public $hallConfig;
     public $selectedDate;
+    
     public function __construct($showtime, $selectedDate)
     {
         $this->hall = Hall::find($showtime->hall_id);
@@ -39,7 +38,6 @@ class HallBuyingScheme extends Component
         }
 
         $this->selectedDate = $selectedDate;
-
     }
 
     /**

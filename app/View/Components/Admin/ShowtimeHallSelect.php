@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 class ShowtimeHallSelect extends Component
 {
     public $halls;
+    
     /**
      * Create a new component instance.
      */

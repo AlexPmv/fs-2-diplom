@@ -458,7 +458,7 @@ input[type="file"]{
     color: rgba(0, 0, 0, 0.7); }
 
 .conf-step__seances-hall {
-  margin: 20px; }
+  margin: 20px 20px 30px; }
 
 .conf-step__seances-title {
   font-weight: 500;

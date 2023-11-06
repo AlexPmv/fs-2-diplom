@@ -12,6 +12,7 @@ class StepHall extends Component
     public $seatsData;
     public $rows;
     public $seats;
+    
     /**
      * Create a new component instance.
      */

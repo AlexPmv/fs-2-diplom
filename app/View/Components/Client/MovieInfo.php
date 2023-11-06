@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 class MovieInfo extends Component
 {
     public $movie;
+    
     /**
      * Create a new component instance.
      */

@@ -18,15 +18,16 @@ class Showtime extends Model
 
     public function movie()
     {
-        return $this->belongsTo('App\Models\Movie');
+        return $this->belongsTo(Movie::class);
     }
+    
     public function hall()
     {
-        return $this->belongsTo('App\Models\Hall');
+        return $this->belongsTo(Hall::class);
     }
 
     public function tickets()
     {
-        return $this->hasMany('App\Models\Ticket');
+        return $this->hasMany(Ticket::class);
     }
 }

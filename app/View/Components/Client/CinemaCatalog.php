@@ -13,6 +13,7 @@ class CinemaCatalog extends Component
     public $catalogData = [];
     public $selectedDate;
     public $currentDate;
+    
     /**
      * Create a new component instance.
      */
@@ -64,8 +65,8 @@ class CinemaCatalog extends Component
                 foreach($showtimes as $showtime) {
                     if ($showtime['movie_id'] === $currentMovieId) {
                         $currentHallShowtimes['showtimes'][] = $showtime;
-                    };
-                };
+                    }
+                }
 
                 $movieData[$i]['showtimesByHalls'][] = $currentHallShowtimes;
             }

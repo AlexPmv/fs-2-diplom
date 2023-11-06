@@ -19,7 +19,7 @@ class Movie extends Model
 
     public function showtimes()
     {
-        return $this->hasMany('App\Models\Showtime');
+        return $this->hasMany(Showtime::class);
     }
 
 }

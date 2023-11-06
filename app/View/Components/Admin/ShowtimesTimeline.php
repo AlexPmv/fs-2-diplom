@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 class ShowtimesTimeline extends Component
 {
     public $showtimes;
+    
     /**
      * Create a new component instance.
      */

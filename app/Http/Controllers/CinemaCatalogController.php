@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Hall;
-use Illuminate\Http\Request;
-\Moment\Moment::setLocale('ru_RU');
 
 class CinemaCatalogController extends Controller
 {
     public $showtimePeriod = [];
     public $selectedDate;
+    
     public function index($date = null)
     {
         $dateExist = false;
@@ -31,12 +29,7 @@ class CinemaCatalogController extends Controller
         }
 
         $currentDate = (new \Moment\Moment('now', 'Europe/Moscow'))->format('Y-m-d');
-
-        if (!$dateExist) {
-            $this->selectedDate = $currentDate;
-        } else {
-            $this->selectedDate = $date;
-        };
+        $this->selectedDate = !$dateExist ? $currentDate : $date;
 
         return view('client.index', ['showtimePeriod' => $this->showtimePeriod, 'selectedDate' => $this->selectedDate]);
     }

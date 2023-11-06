@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use App\Models\Showtime;
 use App\Models\HallConfig;
-use App\Services\QRcode;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

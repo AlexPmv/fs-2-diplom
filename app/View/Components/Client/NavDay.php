@@ -35,8 +35,6 @@ class NavDay extends Component
         if ($this->showtimeDate['weekday'] === 'сб' || $this->showtimeDate['weekday'] === 'вс') {
             $this->showtimeDate['class'] .= ' page-nav__day_weekend';
         }
-
-        
     }
 
     /**

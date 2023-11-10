@@ -54,9 +54,9 @@ function seatClickStatusChange(el) {
 }
 
 async function updateHallConfig(el) {
-  requestData = [];
-  token = el.dataset.token
-  seatsCollection = el.closest('.hall-config').querySelectorAll('[data-seat-id]')
+  const requestData = [];
+  let token = el.dataset.token
+  let seatsCollection = el.closest('.hall-config').querySelectorAll('[data-seat-id]')
 
   for (seat of seatsCollection) {
     requestData.push({id: seat.dataset.seatId, status: seat.dataset.seatStatus});
@@ -80,9 +80,9 @@ async function updateHallConfig(el) {
 }
 
 async function updateHallPrice(el) {
-  token = el.dataset.token
-  halId = el.dataset.hallId
-  priceCollection = el.closest('.hall-price').querySelectorAll('.conf-step__input')
+  let token = el.dataset.token
+  let halId = el.dataset.hallId
+  let priceCollection = el.closest('.hall-price').querySelectorAll('.conf-step__input')
 
   let response = await fetch('update_hall_price', {
     method: 'POST',
@@ -113,13 +113,11 @@ function showResponseMessage (result, status = 'success') {
     messages = infoPopup.querySelector('.messages__wrapper');
     if (infoPopup) {
       messages.textContent = '';
-      child = messages.lastElementChild; 
+      let child = messages.lastElementChild; 
     
-      if (child) {
-        while (child) {
-          messages.removeChild(child);
-          child = messages.lastElementChild;
-        }
+      while (child) {
+        messages.removeChild(child);
+        child = messages.lastElementChild;
       }
 
       result.forEach(error => {
@@ -136,17 +134,15 @@ function showResponseMessage (result, status = 'success') {
   }
 
   if (status === 'success') {
-    infoPopup = document.getElementById('info-popup');
+    let infoPopup = document.getElementById('info-popup');
     infoPopup.querySelector('h2').textContent = 'Сообщение!';
-    messages = infoPopup.querySelector('.messages__wrapper')
+    let messages = infoPopup.querySelector('.messages__wrapper')
     if (infoPopup) {
-      child = messages.lastElementChild; 
+      let child = messages.lastElementChild; 
       
-      if (child) {
-        while (child) {
-          messages.removeChild(child);
-          child = messages.lastElementChild;
-        }
+      while (child) {
+        messages.removeChild(child);
+        child = messages.lastElementChild;
       }
      
       messages.textContent = result;

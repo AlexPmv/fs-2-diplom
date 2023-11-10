@@ -1,5 +1,5 @@
 function showInfoPopup(header, message) {
-  infoPopup = document.getElementById('info-popup');
+  let infoPopup = document.getElementById('info-popup');
   infoPopup.querySelector('h2').textContent = header;
   infoPopup.querySelector('.messages__wrapper').textContent = message;
   switchPopup(infoPopup);
@@ -18,7 +18,7 @@ function deletePopup(el) {
 }
 
 function seatClickStatusChange(el, priceStandart, priceVip) {
-  sum = document.getElementById('total-sum')
+  let sum = document.getElementById('total-sum')
 
   if (el.className == 'buying-scheme__chair buying-scheme__chair_standart') {
     el.className = 'buying-scheme__chair buying-scheme__chair_selected'
@@ -43,8 +43,8 @@ function seatClickStatusChange(el, priceStandart, priceVip) {
 }
 
 function generateRouteToPayment(sum) {
-  selectedSeats = document.querySelectorAll('[data-seat-status = "selected"]')
-  button = document.querySelector('.acceptin-button')
+  let selectedSeats = document.querySelectorAll('[data-seat-status = "selected"]')
+  let button = document.querySelector('.acceptin-button')
 
   if (!selectedSeats.length) {
     infoPopup = document.getElementById('info-popup')
@@ -54,7 +54,7 @@ function generateRouteToPayment(sum) {
 
   button = document.querySelector('.acceptin-button')
   host = location
-  selectedSeatsId = []
+  let selectedSeatsId = []
 
   for (const seat of selectedSeats) {
     selectedSeatsId.push(seat.dataset.seatId)
